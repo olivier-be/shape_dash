@@ -2,7 +2,13 @@
 Dimension=(0,0)
 
 [difficulter]
-difficulter=1
+Difficulter=1
+Vitesse=1
+
+[map]
+seed=AAAAAAA
+hauteur_max=100
+danger_max=3
 
 [stat]
-level_atteint=0
+Level_atteint=0
