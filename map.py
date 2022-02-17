@@ -12,7 +12,7 @@ class Map:
         self.danger=0
         self.case = []
         for e in range(len(tab)):
-            self.tab_str+=str(ord(tab[e])*432565) # transforme les lettre en code uft8 pour réaliser une chaine de caractère
+            self.tab_str+=str(ord(tab[e])*4325655489212302938457) # transforme les lettre en code uft8 pour réaliser une chaine de caractère
         while len(self.tab_str)<=20000:
             self.tab_str+="3"
         e=0
@@ -56,12 +56,4 @@ class Map:
             if self.case[e]==6:
                 nbvide+=1
 
-        return [nbtri,nbsaut,nbvide,nbcase_vide]
-
-
-
-
-
-
-
-
+        return [nbtri,nbsaut//2,nbvide,nbcase_vide]
