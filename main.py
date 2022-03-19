@@ -1,44 +1,79 @@
-import configparser
-
-
+import configparser,map,algo_bot,pygame#,personnage,bot
+import pygame as pg
 config = configparser.ConfigParser()
-config.read('.editorconfig')
-#print(config['Default'])
+config.read('.editorconfig') #ouverture ficher config
 config.sections()
 
+y=int(config["graphique"]["Dimension_y"])
+x=int(config["graphique"]["Dimension_x"])
+taille_case= y//11
+config["map"]["case"]=str(taille_case)
+config["personnage"]["taille"]=str(taille_case)
+config["difficulter"]["longueur_saut"]=str(taille_case*3)
+vitesse=y//250
+Z=map.Map("asdfqskldfjhqlksjdhfalkjshdflkjahqlkjshdfkqjshddse")
+map_def=Z.get_case()
+print(Z)
+print(Z.nb_type_case())
+print("taille saut max",int(config["difficulter"]["longueur_saut"]))
+
+
+
+saut_min=(algo_bot.map_bot_max(map_def,[],0))
+saut_max=(algo_bot.map_bot_min(map_def,[],0))
+print(len(saut_max),len(saut_min),(len(saut_max)+len(saut_min))//2)
+""" 
+un block = 10 pixel 
 """
-import pygame
-
+print()
 pygame.init()
-
-screen=pygame.display.set_mode((400,400))
-running=True
-image=pygame.image.load("ball.png").convert()
-
-clock=pygame.time.Clock()
-x=0
-y=0
+screen = pygame.display.set_mode((int(config["graphique"]["Dimension_x"]),int(config["graphique"]["Dimension_y"])))
+running = True
+background=pygame.image.load(config["map"]["background"]).convert()
+image = pygame.image.load(config["personnage"]["skin"]).convert()
+image=pg.transform.scale(image, (int(config["personnage"]["taille"]), int(config["personnage"]["taille"])))
+x_personage = taille_case*2
+y_personnage =taille_case*8
+print(y_personnage)
+up_personnage=0
+down_personnage=0
+clock = pygame.time.Clock()
+screen.blit(image, (x_personage,y_personnage))
 while running:
     for event in pygame.event.get():
-        if event.type==pygame.QUIT:
-            running=False
+        if event.type == pygame.QUIT:
+            running = False
 
-    pressed=pygame.key.get_pressed()
+    pressed = pygame.key.get_pressed()
     if pressed[pygame.K_LEFT]:
-        x-=1
-    if pressed[pygame.K_RIGHT]:
-        x+=1
-    if pressed[pygame.K_UP]:
-        y-=1
-    if pressed[pygame.K_DOWN]:
-        y+=1
-    screen.fill((0,0,0))
-    screen.blit(image,(x,y))
+        saut = True
+    if pressed[pygame.K_LEFT] == False:
+        saut = True
+    if pressed[pygame.K_ESCAPE]:
+        echap = True
+    if pressed[pygame.K_ESCAPE] == False:
+        echap = False
+    if pressed[pygame.K_UP] and up_personnage == 0 and down_personnage==0:
+        up_personnage = int(config["personnage"]["saut"])
+        y_personnage -= 1*vitesse
+        up_personnage -= 1*vitesse
+    if up_personnage >= 0+vitesse:
+        y_personnage -= 1*vitesse
+        up_personnage -= 1*vitesse
+        print(up_personnage)
+        if up_personnage==0:
+            down_personnage=int(config["personnage"]["saut"])
+    if down_personnage>=0+vitesse:
+        y_personnage+=1*vitesse
+        down_personnage-=1*vitesse
+
+    screen.fill((0, 0, 0))
+    screen.blit(background,(0,0))
+    screen.blit(image, (x_personage, y_personnage))
     pygame.display.flip()
     clock.tick(60)
-pygame.quit()
-"""
 
-from math import *
+pygame.quit()
+
 
 
