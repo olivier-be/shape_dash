@@ -6,6 +6,7 @@ config.read('.editorconfig') #ouverture ficher config
 config.sections()
 
 
+
 def map_bot_max(map_def, saut_bot, i):
     z=int(config["difficulter"]["longueur_saut"])
     for e in range(1,z+1):
@@ -34,3 +35,5 @@ def map_bot(map_def):
     saut_bot=[]
     i=0
     return(map_bot_max(map_def,saut_bot,i),map_bot_min(map_def,[],0))
+
+
