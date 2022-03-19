@@ -1,14 +1,27 @@
 [graphique]
-Dimension=(0,0)
+Dimension_x=1900
+Dimension_y=1080
 
 [difficulter]
 Difficulter=1
-Vitesse=1
+Vitesse=60
+longueur_saut=4
 
 [map]
+case=0
+preconfig1=""
+preconfig2=""
 seed=AAAAAAA
 hauteur_max=100
 danger_max=3
+background=bg.jpg
+background2=bg2.jpg
+background3=bg3.jpg
 
-[stat]
+
+[personnage]
+skin=shape_base2.png
+taille=100
+saut=100
+
 Level_atteint=0
