@@ -6,16 +6,20 @@ config.sections()
 
 y=int(config["graphique"]["Dimension_y"])
 x=int(config["graphique"]["Dimension_x"])
+
 taille_case= y//11
 config["map"]["case"]=str(taille_case)
 config["personnage"]["taille"]=str(taille_case)
-config["difficulter"]["longueur_saut"]=str(taille_case*3)
+config["personnage"]["saut"]=str(taille_case*2)
 vitesse=y//250
+config["difficulter"]["longueur_saut"]=str(taille_case*2)
 Z=map.Map("asdfqskldfjhqlksjdhfalkjshdflkjahqlkjshdfkqjshddse")
 map_def=Z.get_case()
 print(Z)
 print(Z.nb_type_case())
-print("taille saut max",int(config["difficulter"]["longueur_saut"]))
+print(taille_case)
+print(config["personnage"]["taille"])
+print(config["personnage"]["saut"])
 
 
 
@@ -55,18 +59,26 @@ while running:
         echap = False
     if pressed[pygame.K_UP] and up_personnage == 0 and down_personnage==0:
         up_personnage = int(config["personnage"]["saut"])
+        print("zz",up_personnage)
         y_personnage -= 1*vitesse
         up_personnage -= 1*vitesse
     if up_personnage >= 0+vitesse:
         y_personnage -= 1*vitesse
         up_personnage -= 1*vitesse
         print(up_personnage)
-        if up_personnage==0:
-            down_personnage=int(config["personnage"]["saut"])
+        if up_personnage == 0:
+            down_personnage = int(config["personnage"]["saut"])
+    elif up_personnage > 0:
+        y_personnage -= up_personnage
+        up_personnage -= up_personnage
+        if up_personnage == 0:
+            down_personnage = int(config["personnage"]["saut"])
     if down_personnage>=0+vitesse:
         y_personnage+=1*vitesse
         down_personnage-=1*vitesse
-
+    elif down_personnage > 0:
+        y_personnage += down_personnage
+        down_personnage -= down_personnage
     screen.fill((0, 0, 0))
     screen.blit(background,(0,0))
     screen.blit(image, (x_personage, y_personnage))
